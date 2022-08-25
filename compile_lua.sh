@@ -19,7 +19,7 @@ if [[ -z "$platform" ]]; then
     esac
 fi
 
-luaversion=5.1.5
+luaversion=5.4.1
 
 if [[ ! -d lua-src ]]; then
     mkdir lua-src
@@ -44,7 +44,7 @@ if [[ ! -d lua-src/lua-$luaversion ]]; then
     exit 2
 fi
 
-make -C lua-src/lua-$luaversion $platform
+make mingw -C lua-src/lua-$luaversion $platform
 
 if [[ $? -ne 0 ]]; then
     echo "compile standard lua failed" >&2
@@ -62,15 +62,27 @@ fi
 
 cp -r lua-src/lua-$luaversion lua-src/lua-$luaversion-rand-opcodes
 
-./standard_lua rand_opcodes.lua lua-src/lua-$luaversion-rand-opcodes/src/
+echo 按任意键继续
+read -n 1
+echo 继续运行
+
+./standard_lua rand_opcodes_$luaversion.lua lua-src/lua-$luaversion-rand-opcodes/src/
+
+echo 按任意键继续
+read -n 1
+echo 继续运行
 
 if [[ $? -ne 0 ]]; then
     echo "failed to rand opcodes" >&2
     exit 2
 fi
 
-make -C lua-src/lua-$luaversion-rand-opcodes clean
-make -C lua-src/lua-$luaversion-rand-opcodes $platform
+echo 按任意键继续
+read -n 1
+echo 继续运行
+
+make mingw -C lua-src/lua-$luaversion-rand-opcodes clean
+make mingw -C lua-src/lua-$luaversion-rand-opcodes $platform
 
 if [[ $? -ne 0 ]]; then
     echo "compile rand opcodes lua failed" >&2
@@ -79,4 +91,8 @@ fi
 
 try_ln $(pwd)/lua-src/lua-$luaversion-rand-opcodes/src/lua rand_opcodes_lua
 try_ln $(pwd)/lua-src/lua-$luaversion-rand-opcodes/src/luac rand_opcodes_luac
+
+echo 按任意键继续
+read -n 1
+echo 继续运行
 
