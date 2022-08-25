@@ -50,8 +50,8 @@ if [[ $? -ne 0 ]]; then
     echo "compile standard lua failed" >&2
     exit 2
 fi
-
-try_ln $(pwd)/lua-src/lua-$luaversion/src/ standard_lua
+try_ln $(pwd)/lua-src/lua-$luaversion/src/lua standard_lua
+try_ln $(pwd)/lua-src/lua-$luaversion/src/luac standard_luac
 
 # compile rand opcodes lua 
 
@@ -61,24 +61,12 @@ fi
 
 cp -r lua-src/lua-$luaversion lua-src/lua-$luaversion-rand-opcodes
 
-echo 按任意键继续
-read -n 1
-echo 继续运行
-
-./standard_lua/lua rand_opcodes_$luaversion.lua lua-src/lua-$luaversion-rand-opcodes/src/
-
-echo 按任意键继续
-read -n 1
-echo 继续运行
+./lua-src/lua-$luaversion/src/lua rand_opcodes_$luaversion.lua lua-src/lua-$luaversion-rand-opcodes/src/
 
 if [[ $? -ne 0 ]]; then
     echo "failed to rand opcodes" >&2
     exit 2
 fi
-
-echo 按任意键继续
-read -n 1
-echo 继续运行
 
 make mingw -C lua-src/lua-$luaversion-rand-opcodes clean
 make mingw -C lua-src/lua-$luaversion-rand-opcodes $platform
