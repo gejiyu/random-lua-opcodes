@@ -51,8 +51,7 @@ if [[ $? -ne 0 ]]; then
     exit 2
 fi
 
-try_ln $(pwd)/lua-src/lua-$luaversion/src/lua standard_lua
-try_ln $(pwd)/lua-src/lua-$luaversion/src/luac standard_luac
+try_ln $(pwd)/lua-src/lua-$luaversion/src/ standard_lua
 
 # compile rand opcodes lua 
 
@@ -66,7 +65,7 @@ echo 按任意键继续
 read -n 1
 echo 继续运行
 
-./standard_lua rand_opcodes_$luaversion.lua lua-src/lua-$luaversion-rand-opcodes/src/
+./standard_lua/lua rand_opcodes_$luaversion.lua lua-src/lua-$luaversion-rand-opcodes/src/
 
 echo 按任意键继续
 read -n 1

@@ -40,7 +40,7 @@ math.randomseed(os.time())
 local h2 = string.gsub(h, "typedef enum {(.*)} OpCode;", function(s)
     local opcodes = {}
 
-    for m in string.gmatch(s, "(OP_%u+),?") do
+    for m in string.gmatch(s, "(OP_%w+),?") do
         table.insert(opcodes, m)
     end
 
@@ -74,7 +74,7 @@ assert(#op_mapped > 0)
 local n_final = string.gsub(n, "{(.*)NULL%c};", function(s)
     local opstrs = {}
 
-    for m in string.gmatch(s, "\"(%u+)\",") do
+    for m in string.gmatch(s, "\"(%w+)\",") do
         table.insert(opstrs, m)
     end
 
@@ -99,5 +99,6 @@ end)
 assert(c ~= c_final, "failed to replace opmodes")
 
 writefile(source_dir .. "/lopcodes.h", h_final)
+writefile(source_dir .. "/lopnames.h", n_final)
 writefile(source_dir .. "/lopcodes.c", c_final)
 
