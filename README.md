@@ -8,3 +8,5 @@
 * **rand_opcodes.lua** - 随机排列 lua 源代码中的 lopcodes.h / lopcodes.c 定义
 
 对于需要编译 android / ios / windows 平台的 lua，请自行处理。
+
+fix: 支持5.4.1版本 需要使用5.1.5版本的自行修改compile_lua版本号 使用MinGW编译通过。
