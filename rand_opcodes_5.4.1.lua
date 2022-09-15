@@ -65,8 +65,9 @@ end, 1)
 
 assert(h ~= h2, "failed to replace opcode")
 
-local h_final = string.gsub(h2, "NUM_OPCODES%c%(cast%(int, (OP_%u+)%) %+ 1%)", function(s)
-    return string.format("NUM_OPCODES (cast(int, %s) + 1)", last_opcode)
+local h_final = string.gsub(h2, "NUM_OPCODES%c%(%(int%)%((OP_%w+)%) %+ 1%)", function(s)
+    print(last_opcode,"last_opcode")
+    return string.format("NUM_OPCODES ((int)(%s) + 1)", last_opcode)
 end, 1)
 
 assert(#op_mapped > 0)
